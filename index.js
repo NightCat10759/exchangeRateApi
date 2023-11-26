@@ -2,6 +2,8 @@ const Koa = require("koa");
 const ExchangeRate = require("./router/exchangeRate");
 const log4js = require("koa-log4");
 
+const app = new Koa();
+
 log4js.configure({
   appenders: {
     output: {
@@ -14,15 +16,9 @@ log4js.configure({
   },
 });
 
-const app = new Koa();
-
-// response
-app.use((ctx) => {
-  ctx.body = "Hello Koa";
-});
-
 app.use(log4js.koaLogger(log4js.getLogger("http"), { level: "auto" }));
+app.use(ExchangeRate.routes()).use(ExchangeRate.allowedMethods());
 
-ExchangeRate.use("./exchangeRate");
+console.log(ExchangeRate.stack.map((i) => i.path));
 
 app.listen(3000);

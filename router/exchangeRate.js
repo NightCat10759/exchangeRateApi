@@ -2,6 +2,7 @@ const Router = require("koa-router");
 const router = new Router();
 const ExchangeRate = require("../api/exchangeRate");
 
-router.get("/exchangeRate:source:target:amount", ExchangeRate.getExchangeRate);
+router.get("/getExchangeRate", ExchangeRate.getExchangeRate);
+router.get("/getHi", ExchangeRate.getHi);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const fs = require("fs");
+const _ = require("lodash");
 const path = require("path");
 const exchangeData = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../mock/exchangeRate.json"))
@@ -7,7 +8,10 @@ const exchangeData = JSON.parse(
 class ExchangeRate {
   static async getExchangeRate(source, target) {
     try {
-      let echangeRate = exchangeData[source][target];
+      console.info(exchangeData);
+      let echangeRate = !_.isNil(exchangeData.currencies[source][target])
+        ? exchangeData.currencies[source][target]
+        : null;
       return echangeRate;
     } catch (e) {
       console.error(e);
